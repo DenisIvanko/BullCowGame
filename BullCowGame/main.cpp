@@ -8,7 +8,6 @@ For game logic see the FBullCowGame class.
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
-#include <vector>
 
 using FText = std::string;
 using int32 = int;
@@ -36,10 +35,8 @@ int main()
 // introduce the game
 void PrintIntro()
 {
-	constexpr int32 WORD_LENGTH = 5;
-
 	std::cout << "Welcome to Bulls and Cows, Nigga.\n";
-	std::cout << "Can you guess the " << WORD_LENGTH;
+	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
 	std::cout << " letter isogram i'm thinking of?\n";
 	return;
 }
