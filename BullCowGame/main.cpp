@@ -8,6 +8,7 @@ For game logic see the FBullCowGame class.
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
+#include <vector>
 
 using FText = std::string;
 using int32 = int;
@@ -62,7 +63,6 @@ void PlayGame()
 		std::cout << ". Cows = " << BullCowCount.Cows << std::endl;
 		std::cout << std::endl;
 	}
-
 	// TODO add a game summary
 }
 
