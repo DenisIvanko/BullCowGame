@@ -35,9 +35,9 @@ public:
 private:
 	// See constructor for initilization
 	int32 MyCurrentTry;
-	int32 MyMaxTries;
 	FString MyHiddenWord;
 	bool bGameIsWon;
 	
 	bool IsIsogram(FString) const;
+	bool IsLowercase(FString) const;
 };

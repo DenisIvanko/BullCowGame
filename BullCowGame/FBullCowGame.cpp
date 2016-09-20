@@ -2,20 +2,20 @@
 #include <map>
 #define TMap std::map
 
-FBullCowGame::FBullCowGame() { Reset(); }
+FBullCowGame::FBullCowGame() { Reset(); } // default constructor
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameIsWon;}
 
+int32 FBullCowGame::GetMaxTries() const {
+	TMap<int32, int32> WordLengthToMaxTries{ {3,5}, {4,7}, {5,9}, {6,11}, {7,13} };
+	return WordLengthToMaxTries[MyHiddenWord.length()];
+}
 
 void FBullCowGame::Reset()
 {
-	constexpr int32 MAX_TRIES = 3;
-	const FString HIDDEN_WORD = "planet";
-
-	MyMaxTries = MAX_TRIES;
+	const FString HIDDEN_WORD = "planety";
 	MyHiddenWord = HIDDEN_WORD;
 	MyCurrentTry = 1;
 	bGameIsWon = false;
@@ -28,9 +28,9 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 	{
 		return EGuessStatus::Not_Isogram; 
 	}
-	else if (false) // if the guess isn't all lowercase
+	else if (!IsLowercase(Guess)) // if the guess isn't all lowercase
 	{
-		return EGuessStatus::Not_Lowercase; // TODO write function
+		return EGuessStatus::Not_Lowercase; 
 	}
 	else if (Guess.length() != GetHiddenWordLength()) // if the guess length is wrong
 	{
@@ -90,4 +90,16 @@ bool FBullCowGame::IsIsogram(FString Word) const
 		}
 	}
 	return true; // for examples in cases where /0 is entered
+}
+
+bool FBullCowGame::IsLowercase(FString Word) const
+{
+	// treat words of zero length, '\0' and spaces
+
+	for (auto Letter : Word) {
+		if (!islower(Letter)) {
+			return false;
+		}
+	}
+	return true;
 }

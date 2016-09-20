@@ -38,6 +38,13 @@ int main()
 void PrintIntro()
 {
 	std::cout << "\n\nWelcome to Bulls and Cows, Nigga.\n";
+	std::cout << std::endl;
+	std::cout << "          }   {         ___ " << std::endl;
+	std::cout << "          (o o)        (o o) " << std::endl;
+	std::cout << "   /-------\\ /          \\ /-------\\ " << std::endl;
+	std::cout << "  / | BULL |O            O| COW  | \\ " << std::endl;
+	std::cout << " *  |-,--- |              |------|  * " << std::endl;
+	std::cout << "    ^      ^              ^      ^ " << std::endl;
 	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
 	std::cout << " letter isogram i'm thinking of?\n";
 	return;
@@ -72,7 +79,8 @@ FText GetValidGuess()
 	do {
 		// get a guess from the player
 		int32 CurrentTry = BCGame.GetCurrentTry();
-		std::cout << "\nTry " << CurrentTry << ". Just give me the guess: ";
+		std::cout << "\nTry " << CurrentTry << " of " << BCGame.GetMaxTries();
+		std::cout << ". Just give me the guess: ";
 		getline(std::cin, Guess);
 
 		// check status and give feedback
