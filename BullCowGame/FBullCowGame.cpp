@@ -26,42 +26,47 @@ bool FBullCowGame::IsGameWon() const
 	return false;
 }
 
-EWordStatus FBullCowGame::CheckGuessValidity(FString) const
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-
-	return EWordStatus::OK; // TODO make actual error
+	if (false) // if the guess isn't an isogram
+	{
+		return EGuessStatus::Not_Isogram;
+	}
+	else if (false) // if the guess isn't all lowercase
+	{
+		return EGuessStatus::Not_Lowercase;
+	}
+	else if (Guess.length() != GetHiddenWordLength()) // if the guess length is wrong
+	{
+		return EGuessStatus::Wrong_Length;
+	}
+	else 
+	{
+		return EGuessStatus::OK;
+	}
 }
 
-// receives the VALID guess and incriments turn number, and return counts
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+// receives a VALID guess and incriments turn number, and return counts
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
-	// incriment the turn number
 	MyCurrentTry++;
-
-	// setup a return variable
 	FBullCowCount BullCowCount;
+	int32 WordLength = MyHiddenWord.length(); // assuming same guess as length
 
-	// loop through all letters in the guess
-	int32 HiddenWordLength = MyHiddenWord.length();
-	for (int32 MHWChar = 0; MHWChar < HiddenWordLength; MHWChar++)
-	{
-		// compare letters against the hidden word
-		for (int32 GChar = 0; GChar < HiddenWordLength; GChar++)
-		{
+	// loop through all letters in the hidden word
+	for (int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) {
+		// compare letters against the guess
+		for (int32 GChar = 0; GChar < WordLength; GChar++) {
 			// if they match then
-			if (Guess[GChar] == MyHiddenWord[MHWChar])
-			{
-				if (MHWChar == GChar) // if they are in the same place
-				{
+			if (Guess[GChar] == MyHiddenWord[MHWChar]) {
+				if (MHWChar == GChar) { // if they are in the same place
 					BullCowCount.Bulls++; // incriment bulls
 				} 
-				else 
-				{
+				else {
 					BullCowCount.Cows++; // must be a cow
 				}
 			
 			}
-		
 		}
 	}
 
