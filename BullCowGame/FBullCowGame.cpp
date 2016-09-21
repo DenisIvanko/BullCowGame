@@ -1,21 +1,32 @@
+#pragma once
+
 #include "FBullCowGame.h"
 #include <map>
-#define TMap std::map
 
-FBullCowGame::FBullCowGame() { Reset(); } // default constructor
+// to make syntax Unreal friendly
+#define TMap std::map 
+
+FBullCowGame::FBullCowGame() {} // default constructor
 
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
+
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameIsWon;}
 
+FString FBullCowGame::GetHiddenWord(int32 Number) const
+{
+	TMap<int32, FString> PlayersNumberToHiddenWord{ {3,"key"}, {4,"mine"}, {5,"manor"}, {6,"lumber"}, {7, "miracle"} };
+	return PlayersNumberToHiddenWord[Number];
+}
+
 int32 FBullCowGame::GetMaxTries() const {
-	TMap<int32, int32> WordLengthToMaxTries{ {3,5}, {4,7}, {5,9}, {6,11}, {7,13} };
+	TMap<int32, int32> WordLengthToMaxTries{ {3,4}, {4,7}, {5,10}, {6,15}, {7,20} };
 	return WordLengthToMaxTries[MyHiddenWord.length()];
 }
 
-void FBullCowGame::Reset()
+void FBullCowGame::Reset(int32 PlayersNumber)
 {
-	const FString HIDDEN_WORD = "planety";
+	const FString HIDDEN_WORD = GetHiddenWord(PlayersNumber); // This MUST be an isogram
 	MyHiddenWord = HIDDEN_WORD;
 	MyCurrentTry = 1;
 	bGameIsWon = false;
@@ -94,8 +105,6 @@ bool FBullCowGame::IsIsogram(FString Word) const
 
 bool FBullCowGame::IsLowercase(FString Word) const
 {
-	// treat words of zero length, '\0' and spaces
-
 	for (auto Letter : Word) {
 		if (!islower(Letter)) {
 			return false;
